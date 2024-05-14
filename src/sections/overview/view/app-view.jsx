@@ -1,35 +1,34 @@
 import { faker } from '@faker-js/faker';
 import {useState, useEffect} from 'react';
+import {useRouter} from 'src/routes/hooks/use-router';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 
 import Iconify from 'src/components/iconify';
-import { fetchData } from 'src/utils/data_service';
+
+import useData from 'src/utils/data_service';
 
 import AppTasks from '../app-tasks';
 import AppWebsiteVisits from '../app-website-visits';
 import AppWidgetSummary from '../app-widget-summary';
 
 export default function AppView() {
-   const [bill, setBill] = useState(null);
-
+  const [bill, setBill] = useState(null);
+  const router=useRouter();
+  const {fetchDataAthenticated }=useData(); 
   useEffect(() => {
     const fetchDataFromAPI = async () => {
-      try {
-        const response = await fetchData('bills/monthly/');
-        console.log(response); 
-        setBill(response); 
-      } catch (error) {
-        console.error('Error fetching data:', error);
+      const response = await fetchDataAthenticated('bills/monthly/');
+      console.log(response); 
+      setBill(response); 
       }
-    };
-
+    
     fetchDataFromAPI();
   }, []);  
-
-  return (
+  
+  return (  
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>
         Hola, Bien venido de vuelta👋
@@ -37,12 +36,12 @@ export default function AppView() {
 
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3}>
-          <AppWidgetSummary
-            title="Ventas"
-            total={bill?parseInt(bill.total_amount_paid,10):0}
-            color="success"
-            icon={<img alt="icon" src="/assets/icons/glass/ic_glass_bag.png" />}
-          />
+            <AppWidgetSummary
+              title="Ventas"
+              total={bill?parseInt(bill.total_amount_paid,10):0}
+              color="success"
+              icon={<img alt="icon" src="/assets/icons/glass/ic_glass_bag.png" />}
+            />
         </Grid>
 
         <Grid xs={12} sm={6} md={3}>
@@ -51,6 +50,8 @@ export default function AppView() {
             total={1352831}
             color="info"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_users.png" />}
+            clickHandler={()=> {router.push('/usuarios')}}
+            
           />
         </Grid>
 
@@ -60,6 +61,7 @@ export default function AppView() {
             total={1723315}
             color="warning"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_buy.png" />}
+            clickHandler={()=>router.push('/procesos')}
           />
         </Grid>
 

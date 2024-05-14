@@ -4,33 +4,30 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-
 import { fShortenNumber } from 'src/utils/format-number';
-
+import RouterLink from 'src/routes/components/router-link';
 // ----------------------------------------------------------------------
 
-export default function AppWidgetSummary({ title, total, icon, color = 'primary', sx, ...other }) {
+export default function AppWidgetSummary({ title, total, icon, color = 'primary', sx, clickHandler, ...other }) {
   return (
     <Card
       component={Stack}
       spacing={3}
       direction="row"
+      onClick={clickHandler} 
       sx={{
         px: 3,
         py: 5,
         borderRadius: 2,
+        cursor:'pointer',
         ...sx,
       }}
       {...other}
     >
       {icon && <Box sx={{ width: 64, height: 64 }}>{icon}</Box>}
-
       <Stack spacing={0.5}>
         <Typography variant="h4">{fShortenNumber(total)}</Typography>
-
-        <Typography variant="subtitle2" sx={{ color: 'text.disabled' }}>
-          {title}
-        </Typography>
+          <Typography variant="subtitle2" sx={{ color: 'text.disabled'}}>{title}</Typography>
       </Stack>
     </Card>
   );
@@ -42,4 +39,5 @@ AppWidgetSummary.propTypes = {
   sx: PropTypes.object,
   title: PropTypes.string,
   total: PropTypes.number,
+  clickHandler: PropTypes.func,
 };

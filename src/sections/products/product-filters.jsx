@@ -16,7 +16,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
-import { ColorPicker } from 'src/components/color-utils';
 
 // ----------------------------------------------------------------------
 
@@ -33,16 +32,6 @@ export const PRICE_OPTIONS = [
   { value: 'below', label: 'Below $25' },
   { value: 'between', label: 'Between $25 - $75' },
   { value: 'above', label: 'Above $75' },
-];
-export const COLOR_OPTIONS = [
-  '#00AB55',
-  '#000000',
-  '#FFFFFF',
-  '#FFC0CB',
-  '#FF4842',
-  '#1890FF',
-  '#94D82D',
-  '#FFC107',
 ];
 
 // ----------------------------------------------------------------------
@@ -70,18 +59,6 @@ export default function ProductFilters({ openFilter, onOpenFilter, onCloseFilter
     </Stack>
   );
 
-  const renderColors = (
-    <Stack spacing={1}>
-      <Typography variant="subtitle2">Colors</Typography>
-      <ColorPicker
-        name="colors"
-        selected={[]}
-        colors={COLOR_OPTIONS}
-        onSelectColor={(color) => [].includes(color)}
-        sx={{ maxWidth: 38 * 4 }}
-      />
-    </Stack>
-  );
 
   const renderPrice = (
     <Stack spacing={1}>
@@ -170,8 +147,6 @@ export default function ProductFilters({ openFilter, onOpenFilter, onCloseFilter
             {renderGender}
 
             {renderCategory}
-
-            {renderColors}
 
             {renderPrice}
 

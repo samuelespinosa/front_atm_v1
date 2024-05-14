@@ -7,17 +7,17 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { fCurrency } from 'src/utils/format-number';
+import { fDate} from 'src/utils/format-time';
 
 import Label from 'src/components/label';
-import { ColorPreview } from 'src/components/color-utils';
 
 // ----------------------------------------------------------------------
 
-export default function ShopProductCard({ product }) {
+export default function ShopProductCard({ process}) {
   const renderStatus = (
     <Label
       variant="filled"
-      color={(product.status === 'sale' && 'error') || 'info'}
+      color={(process.status === 'sale' && 'error') || 'info'}
       sx={{
         zIndex: 9,
         top: 16,
@@ -26,64 +26,60 @@ export default function ShopProductCard({ product }) {
         textTransform: 'uppercase',
       }}
     >
-      {product.status}
+      {process.state}
     </Label>
   );
 
-  const renderImg = (
-    <Box
-      component="img"
-      alt={product.name}
-      src={product.cover}
-      sx={{
-        top: 0,
-        width: 1,
-        height: 1,
-        objectFit: 'cover',
-        position: 'absolute',
-      }}
-    />
-  );
-
-  const renderPrice = (
-    <Typography variant="subtitle1">
-      <Typography
-        component="span"
-        variant="body1"
-        sx={{
-          color: 'text.disabled',
-          textDecoration: 'line-through',
-        }}
-      >
-        {product.priceSale && fCurrency(product.priceSale)}
+  const renderDevelopers=(
+    process.developer.map((developer)=>(
+      <Typography key={developer.id} sx={{display:"block"}}variant="subtitle3">
+        {`Desarrollador: ${developer.name}`}
       </Typography>
-      &nbsp;
-      {fCurrency(product.price)}
+    )
+  ));
+  
+  const renderGeneric=(title,field)=> (
+    <Typography sx={{display:"block"}}variant="subtitle3">
+      {`${title} : ${field}`}
     </Typography>
   );
 
+  const renderCustomer=(
+    <Typography sx={{display:"block"}}variant="subtitle3">
+      {`Cliente: ${process.customer.name}`}
+    </Typography>
+  );
+  const renderFactura=(
+    <Typography sx={{display:"block"}}variant="subtitle3">
+      {`Precio: ${fCurrency(process.bill.amount)}`}
+    </Typography>
+  );
+
+  
   return (
-    <Card>
-      <Box sx={{ pt: '100%', position: 'relative' }}>
-        {product.status && renderStatus}
-
-        {renderImg}
-      </Box>
-
+    <Card> 
+      <Box >
+        {process.state && renderStatus}
       <Stack spacing={2} sx={{ p: 3 }}>
         <Link color="inherit" underline="hover" variant="subtitle2" noWrap>
-          {product.name}
+         {process.name} 
         </Link>
-
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={product.colors} />
-          {renderPrice}
-        </Stack>
+        
+        <Box direction="column">
+            {renderGeneric("Fecha de entrada",fDate(process.date_in))} 
+            {process.date_start && renderGeneric("Fecha de inicio",fDate(process.date_start))} 
+            {process.date_out && renderGeneric("Fecha de salida",fDate(process.date_out))} 
+            {renderCustomer} 
+            {renderDevelopers} 
+            {renderFactura} 
+        </Box>
       </Stack>
+      </Box>
     </Card>
   );
 }
 
 ShopProductCard.propTypes = {
-  product: PropTypes.object,
+  process: PropTypes.object,
+  /* clickHanddler: PropTypes.func, */
 };
