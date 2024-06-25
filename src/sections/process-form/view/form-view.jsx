@@ -28,10 +28,10 @@ export default function FormView() {
       <Typography variant="h4" sx={{ mb: 5 }}>
         Nuevo Proceso  
       </Typography>
+        <div>
         <ProcessForm/>
+        </div> 
     </Container>
   );
 }
-
-FormView.propTypes = {
-};
+FormView.propTypes = { };

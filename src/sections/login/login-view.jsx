@@ -36,8 +36,7 @@ export default function LoginView() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = async() => {
-     
+  const handleLogin= async() => {
       login({username,password})
       .then(response=>{
         console.log("yes");
@@ -80,7 +79,7 @@ export default function LoginView() {
         type="submit"
         variant="contained"
         color="inherit"
-        onClick={handleSubmit}
+        onClick={handleLogin}
       >
         Login
       </LoadingButton>

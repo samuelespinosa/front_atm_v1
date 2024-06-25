@@ -22,9 +22,9 @@ const useAuth = () => {
       username: credentials.username,
       password: credentials.password,
     });
-      console.log(response.data.access)
+      // console.log(response.data.access);
       localStorage.setItem('authToken', response.data.access); 
-      setIsAuthenticated(true);
+      // setIsAuthenticated(true);
       return response.status;
     } catch (error) {
       console.error('Error fetching data in use-auth:');
