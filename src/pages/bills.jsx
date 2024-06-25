@@ -1,17 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 
-import { FormView } from 'src/sections/process-form/view';
+import { BillView } from 'src/sections/bill/view';
 
 // ----------------------------------------------------------------------
 
-export default function ProcessPage() {
+export default function UserPage() {
   return (
     <>
       <Helmet>
-        <title>Nuevo Proceso</title>
+        <title> Facturas</title>
       </Helmet>
 
-      <FormView/>
+      <BillView/>
     </>
   );
 }

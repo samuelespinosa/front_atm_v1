@@ -18,7 +18,7 @@ import ProductFilters from '../product-filters';
 
 // ----------------------------------------------------------------------
 
-export default function ProductsView() {
+export default function ProcessView() {
  const [processes,setProcesses]=useState(null); 
  const {fetchDataAthenticated}=useData(); 
   useEffect(() => {
